@@ -2,7 +2,22 @@ sudo: false
 
 language: python
 
+python:
+  # Sadly LinkChecker has not been ported to Python3 yet ...
+  - 2.7
+
+virtualenv:
+  system_site_packages: true
+
+addons:
+  apt:
+    packages:
+      - myspell-fr
+      - python-enchant
+
 install:
   - pip install LinkChecker==9.3
 
-script: linkchecker --check-extern .
+script:
+  - python ci/spellcheck.py
+  - linkchecker --check-extern .
